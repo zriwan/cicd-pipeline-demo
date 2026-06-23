@@ -4,4 +4,4 @@ def test_home():
     client = app.test_client()
     response = client.get("/")
     assert response.status_code == 200
-    assert b"Hello from Auto Deployment!" in response.data
+    assert b"CI/CD Pipeline Successfully Deployed" in response.data
