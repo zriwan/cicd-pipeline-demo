@@ -1,7 +1,8 @@
+from botocore.exceptions import ClientError, NoCredentialsError
 from flask import Flask, render_template, request, redirect, url_for, send_file
 import boto3
 import os
-from botocore.exceptions import ClientError
+
 
 app = Flask(__name__)
 
@@ -16,7 +17,7 @@ def home():
         response = s3.list_objects_v2(Bucket=BUCKET_NAME)
         if "Contents" in response:
             files = [obj["Key"] for obj in response["Contents"]]
-    except ClientError as e:
+    except (ClientError, NoCredentialsError) as e:
         print(e)
 
     return render_template("index.html", files=files)
