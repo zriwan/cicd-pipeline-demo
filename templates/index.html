@@ -1,20 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CI/CD Flask App</title>
+    <title>Flask App with AWS S3</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+
+    <div class="hero">
+        <div>
+            <h1>Flask App with AWS S3</h1>
+            <p>Upload and download files securely using Amazon S3 Bucket.</p>
+        </div>
+        <div class="badge">S3 Integration: Working ✅</div>
+    </div>
+
     <div class="container">
-        <h1>CI/CD Pipeline Successfully Deployed</h1>
-        <p>This Flask application is running on AWS EC2 using Docker.</p>
 
         <div class="card">
-            <h2>Project Stack</h2>
-            <p>GitHub Actions + Docker + AWS EC2 + Flask</p>
+            <h2>Upload File to S3</h2>
+            <p>Choose a file and upload it directly to your S3 bucket.</p>
+
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <button type="submit">Upload</button>
+            </form>
         </div>
 
-        <div class="status">Deployment Status: Live ✅</div>
+        <div class="card green-card">
+            <h2>Files in S3 Bucket</h2>
+            <p>Click download to pull files from Amazon S3.</p>
+
+            {% if files %}
+                <table>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for file in files %}
+                    <tr>
+                        <td>📄 {{ file }}</td>
+                        <td><a class="download-btn" href="/download/{{ file }}">Download</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No files found in bucket.</p>
+            {% endif %}
+        </div>
+
     </div>
+
+    <footer>
+        🚀 Built with Flask &nbsp; | &nbsp; ☁️ Powered by AWS S3 &nbsp; | &nbsp; ❤️ Made with Python
+    </footer>
+
 </body>
 </html>
