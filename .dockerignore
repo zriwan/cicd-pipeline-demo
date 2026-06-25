@@ -1,6 +1,10 @@
 venv/
+s3-venv/
 .git/
-.github/
 __pycache__/
 .pytest_cache/
 *.pyc
+access_key
+aws_secretkey
+downloaded_test.txt
+flask_upload.txt

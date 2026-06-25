@@ -5,3 +5,4 @@ __pycache__/
 access_key
 aws_secretkey
 s3-venv/
+.env
