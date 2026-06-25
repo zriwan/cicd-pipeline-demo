@@ -41,10 +41,16 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
+                    script: |
             cd ~/cicd-pipeline-demo
-            git pull origin master
-            docker build -t cicd-flask-app .
-            docker stop flask-app || true
-            docker rm flask-app || true
-            docker run -d --name flask-app -p 80:5000 cicd-flask-app
+            git fetch origin
+            git reset --hard origin/master
+
+            cat > .env <<EOF
+            AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_DEFAULT_REGION=${{ secrets.AWS_DEFAULT_REGION }}
+            EOF
+
+            docker compose down || true
+            docker compose up -d --build

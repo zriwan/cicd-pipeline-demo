@@ -3,8 +3,11 @@ version: "3.9"
 services:
   flask-app:
     build: .
-    container_name: flask-s3-compose
+    container_name: flask-app
     ports:
-      - "5000:5000"
-    env_file:
-      - .env
+      - "80:5000"
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+    restart: unless-stopped
